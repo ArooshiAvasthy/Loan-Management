@@ -1,0 +1,46 @@
+﻿
+@{
+    ViewBag.Title = "UserDashBoard";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.2.6/jquery.min.js"></script>
+<script src="~/Scripts/modernizr-2.6.2.js"></script>
+<script>
+    function getCORS(url, success) {
+        var xhr = new XMLHttpRequest();
+        if (!('withCredentials' in xhr)) xhr = new XDomainRequest();
+        xhr.open('GET', url);
+        xhr.setRequestHeader('Authorization', 'Basic @Session["UserName"].ToString():@Session["Password"].ToString():@Session["Role"].ToString()');
+        xhr.onload = success;
+        xhr.send();
+        return xhr;
+
+    }
+
+
+getCORS('http://localhost:49601/api/loginapi/GetUser', function (request) {
+    var response = request.currentTarget.response || request.target.responseText;
+    //alert(response.toString());
+    val1 = response.toString();
+    //var val2 = "true";
+    //flag.replace(/['"]+/g, '').localeCompare("false")
+    if (val1.replace(/['"]+/g, '').localeCompare("true") == 0) {
+       // alert("hello");
+        if ('@Session["Role"]' == 'Customer')
+            window.location.href = "/ApplyLoan/Index";
+        else if ('@Session["Role"]' == 'Employee')
+            window.location.href = "/Employee/Index";
+    }
+
+    else {
+        alert("Invalid Credentials");
+        window.location.href = "/Home/Index";
+    }
+
+        
+ });
+
+     
+</script>
+

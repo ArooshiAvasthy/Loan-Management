@@ -1,0 +1,11 @@
+﻿
+@{
+    ViewBag.Title = "paymentOptions";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Loan Details</h2>
+
+
+<input type="button" value="Pay EMI" onclick="location.href='@Url.Action("payEMI", "LoanDetails")'" />
+<input type="button" value="Check Account Statement" onclick="location.href='@Url.Action("getAccountStatement3", "LoanDetails")'" /> 

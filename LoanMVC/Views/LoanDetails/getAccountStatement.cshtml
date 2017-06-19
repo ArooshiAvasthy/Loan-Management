@@ -1,0 +1,65 @@
+﻿@model IEnumerable<LoanMVC.Models.runtimeTableType>
+
+@{
+    ViewBag.Title = "getAccountStatement";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>getAccountStatement</h2>
+
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.EmiId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LoanAmountBeg)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EMI)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.InterestPaid)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PrincipalPaid)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LoanAmountEnd)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DateofPayment)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.EmiId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LoanAmountBeg)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EMI)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.InterestPaid)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PrincipalPaid)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LoanAmountEnd)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DateofPayment)
+        </td>
+      
+    </tr>
+}
+
+</table>
+ 

@@ -1,0 +1,131 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <meta name="description" content="Description of your web page goes here." />
+    <meta name="keywords" content="Keywords for you web page go here. Each keyword or group of keyword phrases are separated by a comma. Keep this  list short and relevant to the content and title of this specific page." />
+
+    @*<title>@ViewBag.Title - My ASP.NET MVC Application</title>*@
+
+    <link href="~/DesignTemplateCS/Content/Site.css" rel="stylesheet" media="screen" />
+
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    @Scripts.Render("~/bundles/jquery")
+    @RenderSection("scripts", required: false)
+    <div id="wrapper">
+        <div id="header">
+            <div id="logo">
+                <h1>
+                    Financial Services
+                </h1>
+                <br />
+                <br />
+                
+            </div>
+            <!-- end #logo -->
+            <div id="menu">
+                <ul>
+                    <li class="first">
+                        @Html.ActionLink("Home", "Index", "Home")
+                    </li>
+                    @*<li>
+                        @Html.ActionLink("About", "About", "About")
+                    </li>
+                    <li>
+                        @Html.ActionLink("Contact", "Contact", "Home")
+                    </li>
+                    <li>
+                        @Html.ActionLink("About", "About", "About")
+                    </li>*@
+
+                </ul>
+            </div>
+            <!-- end #menu -->
+        </div>
+        <!-- end #header -->
+        <div id="page">
+            <div id="bgtop">
+                <div id="bgbottom">
+                    <div id="content">
+                        <div class="post">
+                            <div class="title">
+                                <h2>
+                                    @*<a href="#">Employee Data</a>*@
+                                </h2>
+                                @*<p>
+                                        Posted by <a href="#">enks</a> on November 19, 2008
+                                    </p>*@
+                            </div>
+                            <div class="entry">
+
+                                @*<img src="~/DesignTemplateCS/Content/Images/img01.jpg" alt="" width="112" height="104" class="alignleft" />*@
+                                <p>
+                                    @*<asp:ContentPlaceHolder ID="MainContent" runat="server" />*@
+                                    @RenderBody()
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end #content -->
+                    @*<div id="sidebar">
+                        <ul>
+                            <li>
+                                <h2>
+                                    Nullam vitae
+                                </h2>
+                                <ul>
+                                    <li> @Html.ActionLink("About", "About", "About")</li>
+                                    <li><a href="#">Vitae egestas ullamcorpe</a></li>
+                                    <li><a href="#">Ornare donec nec neque</a></li>
+                                    <li><a href="#">Vel rhoncus adipiscing</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <h2>
+                                    Sed magna
+                                </h2>
+                                <ul>
+                                    <li></li>
+                                    <li>@Html.ActionLink("About", "About", "About")</li>
+                                    <li><a href="#">Vulputate non magna</a></li>
+                                    <li><a href="#">Cras a massa integer</a></li>
+                                    <li><a href="#">Nec turpis vel pulvinar</a></li>
+                                    <li><a href="#">Ornare donec nec neque</a></li>
+                                    <li><a href="#">Vel rhoncus adipiscing</a></li>
+                                    <li><a href="#">Vulputate non magna</a></li>
+                                    <li><a href="#">Cras a massa integer</a></li>
+                                    <li><a href="#">Nec turpis vel pulvinar</a></li>
+                                    <li><a href="#">Vulputate non magna</a></li>
+                                    <li><a href="#">Nec turpis vel pulvinar</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>*@
+                    <!-- end #sidebar -->
+                    <div style="clear: both;">
+                        &nbsp;
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end #page -->
+        <div id="footer">
+          
+        </div>
+        <!-- end #footer -->
+    </div>
+
+    @RenderSection("featured", required: false)
+    <section class="content-wrapper main-content clear-fix">
+        @*@RenderBody()*@
+    </section>
+
+
+
+    @*@Scripts.Render("~/bundles/jquery")
+        @RenderSection("scripts", required: false)*@
+</body>
+</html>

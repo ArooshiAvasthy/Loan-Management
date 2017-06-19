@@ -1,0 +1,105 @@
+﻿@model LoanMVC.Models.CustomerType
+
+@{
+    ViewBag.Title = "CreateLoanApplication";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    form {
+        width: 400px;
+    }
+
+    label {
+        width: 150px;
+    }
+
+    input {
+        float: right;
+        width: 150px;
+    }
+
+    select {
+        float: right;
+        width: 150px;
+    }
+</style>
+
+<h3>Loan Application Form:</h3>
+
+@using (Html.BeginForm()) 
+{
+
+    @*<div class="container">
+    <div class="main">*@
+<div class="">
+    <div class="">
+        <form class="form" method="post" action="#">
+            <fieldset>
+
+                <label>Name :</label>
+                <input type="text" name="name" id="name" value=@Model.Name readonly><br /><br />
+
+                <label>Age :</label>
+                <input type="number" name="age" id="age" value=@Model.Age readonly><br /><br />
+
+
+                <label>Salary :</label>
+                <input type="number" name="salary" id="salary"><br /><br />
+                <label>TypeOfLoan :</label>
+                <select name="typeofLoan" id="type">
+                    <option value="home">Home</option>
+                    <option value="Education">Education</option>
+                    <option value="Personal">Personal</option>
+                </select>
+                <br /><br />
+                <label>Duration :</label>
+                <input type="number" name="duration" id="duration"><br /><br />
+                <label>Amount :</label>
+                <input type="number" name="amount" id="amount"><br /><br /><br />
+
+                @*<input type="button" name="register" id="register" value="Submit">*@
+                <div class="form-group">
+                    @*<div class="col-md-offset-2 col-md-10">*@
+                        <input type="submit" value="Create" class="btn btn-default" />
+                   </div>
+               @* </div>*@
+            </fieldset>
+        </form>
+    </div>
+</div>
+
+@*<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.2.6/jquery.min.js"></script>
+<script src="~/Scripts/modernizr-2.6.2.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#register").click(function () {
+            var name = $("#name").val();
+            var age = $("#age").val();
+            var salary = $("#salary").val();
+            var type = $("#type").val();
+            var duration = $("#duration").val();
+            var amount = $("#amount").val();
+            var username = '@Session["UserName"].ToString()';
+            $.ajax({
+                url: "http://localhost:49601/api/ApplyLoanApi",
+                type: "POST",
+                data: JSON.stringify([name, age,salary,type,duration,amount,username]), //{ Name: name,
+                // Address: address, DOB: dob },
+                contentType: 'application/json; charset=utf-8',
+                success: function (data) {
+                    //alert('Added Successfully');
+
+
+                    window.location.href="/ApplyLoan/Index";
+                },
+                error: function (jqXhr) {
+                    alert(jqXhr.responseText);
+                }
+             
+            });
+        });
+    });
+</script>*@
+}
+
+

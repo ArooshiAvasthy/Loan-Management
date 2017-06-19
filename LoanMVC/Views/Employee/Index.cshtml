@@ -1,0 +1,10 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Welcome @Session["UserName"]</h2>
+
+<input type="button" value="List of Applicants" onclick="location.href='@Url.Action("CheckLoanApplicants", "Employee")'" />
+

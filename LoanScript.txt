@@ -1,0 +1,514 @@
+USE [master]
+GO
+/****** Object:  Database [LoanManagement2]    Script Date: 6/19/2017 3:07:40 PM ******/
+CREATE DATABASE [LoanManagement2]
+ CONTAINMENT = NONE
+ ON  PRIMARY 
+( NAME = N'LoanManagement2', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL12.MSSQLSERVER\MSSQL\DATA\LoanManagement2.mdf' , SIZE = 3072KB , MAXSIZE = UNLIMITED, FILEGROWTH = 1024KB )
+ LOG ON 
+( NAME = N'LoanManagement2_log', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL12.MSSQLSERVER\MSSQL\DATA\LoanManagement2_log.ldf' , SIZE = 1024KB , MAXSIZE = 2048GB , FILEGROWTH = 10%)
+GO
+ALTER DATABASE [LoanManagement2] SET COMPATIBILITY_LEVEL = 100
+GO
+IF (1 = FULLTEXTSERVICEPROPERTY('IsFullTextInstalled'))
+begin
+EXEC [LoanManagement2].[dbo].[sp_fulltext_database] @action = 'enable'
+end
+GO
+ALTER DATABASE [LoanManagement2] SET ANSI_NULL_DEFAULT OFF 
+GO
+ALTER DATABASE [LoanManagement2] SET ANSI_NULLS OFF 
+GO
+ALTER DATABASE [LoanManagement2] SET ANSI_PADDING OFF 
+GO
+ALTER DATABASE [LoanManagement2] SET ANSI_WARNINGS OFF 
+GO
+ALTER DATABASE [LoanManagement2] SET ARITHABORT OFF 
+GO
+ALTER DATABASE [LoanManagement2] SET AUTO_CLOSE OFF 
+GO
+ALTER DATABASE [LoanManagement2] SET AUTO_SHRINK OFF 
+GO
+ALTER DATABASE [LoanManagement2] SET AUTO_UPDATE_STATISTICS ON 
+GO
+ALTER DATABASE [LoanManagement2] SET CURSOR_CLOSE_ON_COMMIT OFF 
+GO
+ALTER DATABASE [LoanManagement2] SET CURSOR_DEFAULT  GLOBAL 
+GO
+ALTER DATABASE [LoanManagement2] SET CONCAT_NULL_YIELDS_NULL OFF 
+GO
+ALTER DATABASE [LoanManagement2] SET NUMERIC_ROUNDABORT OFF 
+GO
+ALTER DATABASE [LoanManagement2] SET QUOTED_IDENTIFIER OFF 
+GO
+ALTER DATABASE [LoanManagement2] SET RECURSIVE_TRIGGERS OFF 
+GO
+ALTER DATABASE [LoanManagement2] SET  DISABLE_BROKER 
+GO
+ALTER DATABASE [LoanManagement2] SET AUTO_UPDATE_STATISTICS_ASYNC OFF 
+GO
+ALTER DATABASE [LoanManagement2] SET DATE_CORRELATION_OPTIMIZATION OFF 
+GO
+ALTER DATABASE [LoanManagement2] SET TRUSTWORTHY OFF 
+GO
+ALTER DATABASE [LoanManagement2] SET ALLOW_SNAPSHOT_ISOLATION OFF 
+GO
+ALTER DATABASE [LoanManagement2] SET PARAMETERIZATION SIMPLE 
+GO
+ALTER DATABASE [LoanManagement2] SET READ_COMMITTED_SNAPSHOT OFF 
+GO
+ALTER DATABASE [LoanManagement2] SET HONOR_BROKER_PRIORITY OFF 
+GO
+ALTER DATABASE [LoanManagement2] SET RECOVERY SIMPLE 
+GO
+ALTER DATABASE [LoanManagement2] SET  MULTI_USER 
+GO
+ALTER DATABASE [LoanManagement2] SET PAGE_VERIFY CHECKSUM  
+GO
+ALTER DATABASE [LoanManagement2] SET DB_CHAINING OFF 
+GO
+ALTER DATABASE [LoanManagement2] SET FILESTREAM( NON_TRANSACTED_ACCESS = OFF ) 
+GO
+ALTER DATABASE [LoanManagement2] SET TARGET_RECOVERY_TIME = 0 SECONDS 
+GO
+ALTER DATABASE [LoanManagement2] SET DELAYED_DURABILITY = DISABLED 
+GO
+EXEC sys.sp_db_vardecimal_storage_format N'LoanManagement2', N'ON'
+GO
+USE [LoanManagement2]
+GO
+/****** Object:  Table [dbo].[1]    Script Date: 6/19/2017 3:07:41 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[1](
+	[EmiId] [int] IDENTITY(1,1) NOT NULL,
+	[LoanAmountBeg] [float] NULL,
+	[EMI] [float] NULL,
+	[InterestPaid] [float] NULL,
+	[PrincipalPaid] [float] NULL,
+	[LoanAmountEnd] [float] NULL,
+	[DateofPayment] [date] NULL
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[Customers]    Script Date: 6/19/2017 3:07:41 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Customers](
+	[CustomerId] [int] IDENTITY(1,1) NOT NULL,
+	[Name] [nvarchar](50) NOT NULL,
+	[Address] [nvarchar](50) NOT NULL,
+	[Age] [int] NOT NULL,
+	[UserName] [nvarchar](50) NOT NULL,
+	[Password] [nvarchar](50) NOT NULL,
+	[Role] [nvarchar](max) NULL,
+ CONSTRAINT [PK_Customers] PRIMARY KEY CLUSTERED 
+(
+	[CustomerId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[LoanApplicants]    Script Date: 6/19/2017 3:07:41 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[LoanApplicants](
+	[ApplicantId] [int] IDENTITY(1,1) NOT NULL,
+	[CustomerID] [int] NOT NULL,
+	[Name] [nvarchar](max) NOT NULL,
+	[Age] [int] NOT NULL,
+	[Salary] [float] NOT NULL,
+	[TypeOfLoan] [nvarchar](max) NOT NULL,
+	[Duration] [int] NULL,
+	[StatusOfLoan] [nvarchar](max) NULL,
+	[Amount] [float] NULL,
+ CONSTRAINT [PK_LoanApplicants] PRIMARY KEY CLUSTERED 
+(
+	[ApplicantId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[SelectedApplicants]    Script Date: 6/19/2017 3:07:41 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[SelectedApplicants](
+	[SelectedAppID] [int] IDENTITY(1,1) NOT NULL,
+	[ApplicantId] [int] NULL,
+	[LoanAmount] [float] NULL,
+	[TypeOfLoan] [nvarchar](max) NULL,
+	[Interest] [int] NULL,
+	[Duration] [int] NULL,
+	[DateofLoan] [date] NULL,
+	[EMI] [float] NULL,
+ CONSTRAINT [PK_SelectedApplicants] PRIMARY KEY CLUSTERED 
+(
+	[SelectedAppID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+
+GO
+SET IDENTITY_INSERT [dbo].[1] ON 
+
+GO
+INSERT [dbo].[1] ([EmiId], [LoanAmountBeg], [EMI], [InterestPaid], [PrincipalPaid], [LoanAmountEnd], [DateofPayment]) VALUES (1, 444, 11.261, 3.69999852, 7.56100148, 436.43899852, CAST(N'2017-05-23' AS Date))
+GO
+INSERT [dbo].[1] ([EmiId], [LoanAmountBeg], [EMI], [InterestPaid], [PrincipalPaid], [LoanAmountEnd], [DateofPayment]) VALUES (2, 436.43901147497223, 11.261, 3.6369903074947305, 7.56100148, 428.815001782467, CAST(N'2017-05-23' AS Date))
+GO
+INSERT [dbo].[1] ([EmiId], [LoanAmountBeg], [EMI], [InterestPaid], [PrincipalPaid], [LoanAmountEnd], [DateofPayment]) VALUES (3, 428.81501473743918, 11.261, 3.5734570267619441, 7.56100148, 421.12747176420112, CAST(N'2017-05-23' AS Date))
+GO
+INSERT [dbo].[1] ([EmiId], [LoanAmountBeg], [EMI], [InterestPaid], [PrincipalPaid], [LoanAmountEnd], [DateofPayment]) VALUES (4, 421.12748471917337, 11.261, 3.5093943022348291, 7.56100148, 413.3758790214082, CAST(N'2017-05-23' AS Date))
+GO
+SET IDENTITY_INSERT [dbo].[1] OFF
+GO
+SET IDENTITY_INSERT [dbo].[Customers] ON 
+
+GO
+INSERT [dbo].[Customers] ([CustomerId], [Name], [Address], [Age], [UserName], [Password], [Role]) VALUES (24, N'Manisha', N'Delhi', 35, N'manisha', N'manisha', N'Customer')
+GO
+INSERT [dbo].[Customers] ([CustomerId], [Name], [Address], [Age], [UserName], [Password], [Role]) VALUES (30, N'asd', N'asd', 34, N'asd', N'asd', N'Customer')
+GO
+SET IDENTITY_INSERT [dbo].[Customers] OFF
+GO
+SET IDENTITY_INSERT [dbo].[LoanApplicants] ON 
+
+GO
+INSERT [dbo].[LoanApplicants] ([ApplicantId], [CustomerID], [Name], [Age], [Salary], [TypeOfLoan], [Duration], [StatusOfLoan], [Amount]) VALUES (1, 30, N'asd', 34, 4444444, N'home', 4, N'Approved', 444)
+GO
+INSERT [dbo].[LoanApplicants] ([ApplicantId], [CustomerID], [Name], [Age], [Salary], [TypeOfLoan], [Duration], [StatusOfLoan], [Amount]) VALUES (2, 30, N'asd', 34, 77777, N'home', 7, N'Pending', 7777)
+GO
+SET IDENTITY_INSERT [dbo].[LoanApplicants] OFF
+GO
+SET IDENTITY_INSERT [dbo].[SelectedApplicants] ON 
+
+GO
+INSERT [dbo].[SelectedApplicants] ([SelectedAppID], [ApplicantId], [LoanAmount], [TypeOfLoan], [Interest], [Duration], [DateofLoan], [EMI]) VALUES (1, 1, 413.37589197638039, N'home', 10, 4, CAST(N'2017-05-23' AS Date), 11.260987045027784)
+GO
+SET IDENTITY_INSERT [dbo].[SelectedApplicants] OFF
+GO
+SET ANSI_PADDING ON
+
+GO
+/****** Object:  Index [UniqueUsername]    Script Date: 6/19/2017 3:07:41 PM ******/
+ALTER TABLE [dbo].[Customers] ADD  CONSTRAINT [UniqueUsername] UNIQUE NONCLUSTERED 
+(
+	[UserName] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+ALTER TABLE [dbo].[LoanApplicants]  WITH CHECK ADD  CONSTRAINT [FK__LoanAppli__Custo__07F6335A] FOREIGN KEY([CustomerID])
+REFERENCES [dbo].[Customers] ([CustomerId])
+GO
+ALTER TABLE [dbo].[LoanApplicants] CHECK CONSTRAINT [FK__LoanAppli__Custo__07F6335A]
+GO
+ALTER TABLE [dbo].[SelectedApplicants]  WITH CHECK ADD  CONSTRAINT [FK__SelectedA__Appli__08EA5793] FOREIGN KEY([ApplicantId])
+REFERENCES [dbo].[LoanApplicants] ([ApplicantId])
+GO
+ALTER TABLE [dbo].[SelectedApplicants] CHECK CONSTRAINT [FK__SelectedA__Appli__08EA5793]
+GO
+/****** Object:  StoredProcedure [dbo].[AddToCustomers]    Script Date: 6/19/2017 3:07:41 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[AddToCustomers]
+        
+           @Name nvarchar(50)
+         , @Address nvarchar(50)
+		 , @Age int
+		 , @UserName nvarchar(50)
+		 , @Password nvarchar(50)
+	 	 
+AS
+BEGIN
+	
+	INSERT INTO [Customers] 
+		(
+		     [Name]
+			,[Address]
+			, [Age]
+			, [UserName]
+			, [Password]	
+			,[Role]
+		) 
+	VALUES 
+		(
+		    @Name 
+         , @Address
+		 , @Age 
+		 , @UserName 
+		 , @Password 
+		 ,'Customer'
+		 
+		)
+
+
+select * from Customers
+END
+
+
+GO
+/****** Object:  StoredProcedure [dbo].[AddToLoanApplicants]    Script Date: 6/19/2017 3:07:41 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[AddToLoanApplicants]
+        
+           @Name nvarchar(50)
+		 , @Age int
+		 , @Salary float
+		 , @TypeOfLoan nvarchar(50)
+		 , @Duration int
+		 
+		 , @Amount float
+		 , @UserName nvarchar(50)
+	 	 
+AS
+BEGIN
+	
+	INSERT INTO [LoanApplicants] 
+		(
+		     [Name]
+			,[Age]
+			, [Salary]
+			, [TypeOfLoan]
+			, [Duration]
+	
+			,[Amount]
+			,[CustomerID]
+			,[StatusOfLoan]
+				
+		) 
+	VALUES 
+		(
+		   @Name 
+		 , @Age 
+		 , @Salary 
+		 , @TypeOfLoan 
+		 , @Duration 
+		 , @Amount 
+	     ,(Select  CustomerID from Customers where UserName=@username and Role='Customer')
+		 ,'Pending'
+		)
+select * from LoanApplicants
+
+
+END
+
+
+GO
+/****** Object:  StoredProcedure [dbo].[ApplicantProcessApproved]    Script Date: 6/19/2017 3:07:41 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[ApplicantProcessApproved]
+          @applicantID int
+		  ,@interest float
+		  ,@emi float
+		  ,@typeofLoan nvarchar(50)
+		  ,@applicantIDString nvarchar(50)
+ 	 	 
+AS
+BEGIN
+--	--start test	
+--declare @applicantID int
+--set @applicantID='14'
+
+--declare @interest float 
+--set @interest='10.00'
+
+--declare @emi float
+--set @emi='741.0333'
+
+--declare @typeofLoan nvarchar(50)  
+--set @typeofLoan='home'
+
+--declare @applicantIDString nvarchar(50)  
+--set @applicantIDString='14'
+
+----end test 
+  
+
+INSERT INTO [SelectedApplicants] 
+		(
+		       [ApplicantId]
+			  ,[LoanAmount]
+			  ,[TypeOfLoan]
+			  ,[Interest]
+			  ,[Duration]
+			  ,[DateofLoan]
+			  ,[EMI]
+		) 
+	VALUES 
+		(
+		   @applicantID
+		  ,(Select Amount from LoanApplicants where ApplicantId=@applicantID) 
+		  ,@typeofLoan
+		  ,@interest 
+		  ,(Select Duration from LoanApplicants where ApplicantId=@applicantID) 
+		  ,GETDATE()
+		  ,@emi
+		  		 
+		)
+
+
+Update LoanApplicants
+Set StatusOfLoan='Approved'
+where ApplicantId=@applicantID
+
+--Create one table for each applicant
+declare @SqlStart nvarchar(max) 
+set @SqlStart = 'CREATE TABLE [dbo].[' + @applicantIDString + '] 
+				([EmiId] [int] IDENTITY(1,1) NOT NULL,
+				[LoanAmountBeg] [float],
+				[EMI] [float],
+				[InterestPaid] [float],
+				[PrincipalPaid] [float],
+				[LoanAmountEnd] [float],
+				[DateofPayment] [Date])'
+
+
+
+Exec (@SqlStart)
+			
+--declare @SqlInsert nvarchar(max) 
+--set @SqlInsert = 'INSERT INTO [' + @applicantIDString + ']
+--		(
+--			[LoanAmountBeg],
+--			[EMI],
+--			[InterestPaid],
+--			[PrincipalPaid],
+--			[LoanAmountEnd]
+--		) 
+--	VALUES 
+--		(
+--		   (Select Amount from LoanApplicants where ApplicantId='+CAST(@applicantID AS NVARCHAR(10))+') 
+--		  ,'+CAST(@emi AS NVARCHAR(10))+'
+--		  ,(Select Amount from LoanApplicants where ApplicantId='+CAST(@applicantID AS NVARCHAR(10))+')*'+CAST((@interest/1200) AS NVARCHAR(10))+'
+--		  ,'+CAST(@emi AS NVARCHAR(10))+'- (Select Amount from LoanApplicants where ApplicantId='+CAST(@applicantID AS NVARCHAR(10))+')*'+CAST((@interest/1200) AS NVARCHAR(10))+'
+--		  ,(Select Amount from LoanApplicants where ApplicantId='+CAST(@applicantID AS NVARCHAR(10))+') -'+CAST(@emi AS NVARCHAR(10))+'- (Select Amount from LoanApplicants where ApplicantId='+CAST(@applicantID AS NVARCHAR(10))+')*'+CAST((@interest/1200) AS NVARCHAR(10))+'
+		  		 
+--		)'
+----print @sqlinsert
+--Exec (@SqlInsert)
+Select * from LoanApplicants where ApplicantId=@applicantID
+END
+
+
+GO
+/****** Object:  StoredProcedure [dbo].[ApplicantProcessRejected]    Script Date: 6/19/2017 3:07:41 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+Create PROCEDURE [dbo].[ApplicantProcessRejected]
+           @applicantID int
+		  
+ 	 	 
+AS
+BEGIN
+
+Update LoanApplicants
+Set StatusOfLoan='Rejected'
+where ApplicantId=@applicantID
+
+Select * from LoanApplicants where ApplicantId=@applicantID
+END
+
+
+GO
+/****** Object:  StoredProcedure [dbo].[PayEMI2]    Script Date: 6/19/2017 3:07:41 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[PayEMI2]
+          @applicantID int
+		  ,@interest float
+		  ,@emi float
+		  ,@typeofLoan nvarchar(50)
+		  ,@applicantIDString nvarchar(50)
+ 	 	 
+AS
+BEGIN
+----	--start test	
+--declare @applicantID int
+--set @applicantID='20'
+
+--declare @interest float 
+--set @interest='10.00'
+
+--declare @emi float
+--set @emi='121.393'
+
+--declare @typeofLoan nvarchar(50)  
+--set @typeofLoan='home'
+
+--declare @applicantIDString nvarchar(50)  
+--set @applicantIDString='20'
+
+----end test 
+  
+			
+declare @SqlInsert nvarchar(max) 
+set @SqlInsert = 'INSERT INTO [' + @applicantIDString + ']
+		(
+			[LoanAmountBeg],
+			[EMI],
+			[InterestPaid],
+			[PrincipalPaid],
+			[LoanAmountEnd],
+			[DateofPayment]
+		) 
+	VALUES 
+		(
+		   (Select LoanAmount from SelectedApplicants where ApplicantId='+CAST(@applicantID AS NVARCHAR(10))+') 
+		  ,'+CAST(@emi AS NVARCHAR(10))+'
+		  ,((Select LoanAmount from SelectedApplicants where ApplicantId='+CAST(@applicantID AS NVARCHAR(10))+')*'+CAST((@interest/1200) AS NVARCHAR(10))+')
+		  ,('+CAST(@emi AS NVARCHAR(10))+'- ((Select Amount from LoanApplicants where ApplicantId='+CAST(@applicantID AS NVARCHAR(10))+')*'+CAST((@interest/1200) AS NVARCHAR(10))+'))
+		  ,((Select LoanAmount from SelectedApplicants where ApplicantId='+CAST(@applicantID AS NVARCHAR(10))+') -('+CAST(@emi AS NVARCHAR(10))+'- ((Select LoanAmount from SelectedApplicants where ApplicantId='+CAST(@applicantID AS NVARCHAR(10))+')*'+CAST((@interest/1200) AS NVARCHAR(10))+')))
+		  ,GETDATE()		 
+		)'
+--print @sqlinsert
+Exec (@SqlInsert)
+
+Update SelectedApplicants 
+Set LoanAmount =((Select LoanAmount from SelectedApplicants where ApplicantId=@applicantID) -(@emi- ((Select LoanAmount from SelectedApplicants where ApplicantId=@applicantID)*0.00833333)))
+where ApplicantId=@applicantID
+
+select * from SelectedApplicants where ApplicantId=@applicantID
+END
+
+
+GO
+/****** Object:  StoredProcedure [dbo].[ProvideLoanStatus]    Script Date: 6/19/2017 3:07:41 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[ProvideLoanStatus]
+           @username nvarchar(50)
+		  
+ 	 	 
+AS
+BEGIN
+
+Select *
+from LoanApplicants
+where CustomerID=(Select CustomerId from Customers where UserName= @username )
+END
+
+GO
+USE [master]
+GO
+ALTER DATABASE [LoanManagement2] SET  READ_WRITE 
+GO
